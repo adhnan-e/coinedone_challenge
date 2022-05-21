@@ -1,6 +1,6 @@
-import 'package:coinedone_challenge/Screens/Dashbord/Widgets/dashboard_widget.dart';
-import 'package:coinedone_challenge/Screens/Dashbord/Widgets/devices_widget.dart';
-import 'package:coinedone_challenge/Screens/Dashbord/Widgets/usage_widget.dart';
+import 'package:coinedone_challenge/Screens/Dashboard/Widgets/dashboard_widget.dart';
+import 'package:coinedone_challenge/Screens/Dashboard/Widgets/devices_widget.dart';
+import 'package:coinedone_challenge/Screens/Dashboard/Widgets/usage_widget.dart';
 import 'package:coinedone_challenge/Services/connectivity_service.dart';
 import 'package:coinedone_challenge/Services/dashboard_service.dart';
 import 'package:coinedone_challenge/bloc/dashboard_bloc.dart';
