@@ -1,10 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:coinedone_challenge/Constants/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class DashBoardWidget extends StatelessWidget {
-  const DashBoardWidget({Key? key}) : super(key: key);
+import '../../../Constants/my_functions.dart';
+import '../../../Models/dashboard_model.dart';
 
+class DashBoardWidget extends StatelessWidget {
+  const DashBoardWidget({Key? key, required this.chartData}) : super(key: key);
+  final ChartData chartData;
   @override
   Widget build(BuildContext context) {
     double dashBoardSized=(MediaQuery.of(context).size.width);
@@ -12,7 +15,7 @@ class DashBoardWidget extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.all(24),
-          child: Text("Dashboard", style: TextStyle(fontSize: 24)),
+          child: Text("Dashboard", style:TextStyle(fontSize: 24,fontWeight: FontWeight.w700)),
         ),
         SizedBox(
           width: dashBoardSized,
@@ -21,21 +24,19 @@ class DashBoardWidget extends StatelessWidget {
             children: [
               PieChart(
                 // degreeOptions: ,
-                dataMap: const {
-                  "Flutter": 5,
-                  "React": 3,
-                  "Xamarin": 2,
-                  "Ionic": 2,
+                dataMap:  {
+                  "Class": double.parse(chartData.classTime.total.toString()),
+                  "Study": double.parse(chartData.studyTime.total.toString()),
+                  "Free-time": double.parse(chartData.classTime.total.toString()),
                 },
                 animationDuration: const Duration(milliseconds: 800),
                 chartLegendSpacing: 32,
 
                 chartRadius: (MediaQuery.of(context).size.width) / 2,
                 colorList: const [
-                  Color.fromRGBO(223, 250, 92, 1),
-                  Color.fromRGBO(129, 250, 112, 1),
-                  Color.fromRGBO(255, 0, 0, 1.0),
-                  Color.fromRGBO(250, 112, 248, 1.0),
+                 MyColors.classColors,
+                 MyColors.studyColors,
+                 MyColors.freeTimeColors
                  ],
                 degreeOptions:const DegreeOptions(initialAngle: 0,totalDegrees: 360),
                 initialAngleInDegree: 0,
@@ -60,8 +61,8 @@ class DashBoardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                  Text("Total"),
-                  Text("2h 40m"),
+                  const Text("Total",style:TextStyle(fontSize: 20,fontWeight: FontWeight.w700)),
+                  Text(durationToString(int.parse(chartData.totalTime.total.toString())),style:const TextStyle(fontSize: 27,fontWeight: FontWeight.w400)),
                 ]),
               )
             ],
@@ -71,14 +72,13 @@ class DashBoardWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 24),
           child: SizedBox(
               height: 50,
-              child: ListView.builder(
+              child: ListView(
                 shrinkWrap: true,
-                itemCount: 3,
                 physics:const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    width: (MediaQuery.of(context).size.width/3)-20,
+                children: [
+                  SizedBox(
+                      width: (MediaQuery.of(context).size.width/3)-20,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -87,24 +87,78 @@ class DashBoardWidget extends StatelessWidget {
                             height: 14,
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: MyColors.classColors,
                                   border: Border.all(
                                     color: Colors.white,
                                   ),
                                   borderRadius:
-                                      const BorderRadius.all(Radius.circular(90))),
+                                  const BorderRadius.all(Radius.circular(90))),
                             ),
                           ),
-                         const SizedBox(width: 5,),
+                          const SizedBox(width: 5,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                            Text("Class"),
-                            Text("1h 20m"),
-                          ],)
+                              const Text("Class",style:TextStyle(fontSize: 14,fontWeight: FontWeight.w400)),
+                               Text(durationToString(int.parse(chartData.classTime.total)),style:const TextStyle(fontSize: 14,fontWeight: FontWeight.w700)),
+                            ],)
                         ],
-                      ));
-                },
+                      )),
+                  SizedBox(
+                      width: (MediaQuery.of(context).size.width/3)-20,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 14,
+                            height: 14,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: MyColors.studyColors,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                  ),
+                                  borderRadius:
+                                  const BorderRadius.all(Radius.circular(90))),
+                            ),
+                          ),
+                          const SizedBox(width: 5,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                             const Text("Study",style:TextStyle(fontSize: 14,fontWeight: FontWeight.w400)),
+                              Text(durationToString(int.parse(chartData.studyTime.total)),style:const TextStyle(fontSize: 14,fontWeight: FontWeight.w700)),
+                            ],)
+                        ],
+                      )),
+                  SizedBox(
+                      width: (MediaQuery.of(context).size.width/3)-20,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 14,
+                            height: 14,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: MyColors.freeTimeColors,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                  ),
+                                  borderRadius:
+                                  const BorderRadius.all(Radius.circular(90))),
+                            ),
+                          ),
+                          const SizedBox(width: 5,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Free-time",style:TextStyle(fontSize: 14,fontWeight: FontWeight.w400)),
+                              Text(durationToString(int.parse(chartData.freeTime.total)),style:const TextStyle(fontSize: 14,fontWeight: FontWeight.w700)),
+                            ],)
+                        ],
+                      )),
+                ],
               )),
         ),
       ],

@@ -1,9 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import '/Constants/my_colors.dart';
+import '/Constants/my_functions.dart';
 import 'package:flutter/material.dart';
 
-class DevicesWidget extends StatelessWidget {
-  const DevicesWidget({Key? key}) : super(key: key);
+import '../../../Models/dashboard_model.dart';
 
+class DevicesWidget extends StatelessWidget {
+  const DevicesWidget({Key? key, required this.deviceUsage}) : super(key: key);
+  final  DeviceUsage deviceUsage;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -13,8 +16,8 @@ class DevicesWidget extends StatelessWidget {
           child: Text("By Devices",
               style: TextStyle(
                   fontSize: 18,
-                  color: Color(0xFF201F1E),
-                  fontWeight: FontWeight.w700)),
+                  color: MyColors.grayColors,
+                  fontWeight: FontWeight.w600)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 24),
@@ -27,16 +30,16 @@ class DevicesWidget extends StatelessWidget {
                     flex: 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Adi’s Phone",
+                      children:  [
+                        const Text("Adi’s Phone",
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600)),
-                        Text("40m",
-                            style: TextStyle(
+                        Text(durationToString(int.parse(deviceUsage.totalTime.mobile)),
+                            style: const TextStyle(
                               fontSize: 18,
-                              color: Color(0xFF3D7FE0),
+                              color: MyColors.deviceTextColors,
                             )),
                       ],
                     )),
@@ -56,15 +59,15 @@ class DevicesWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Adi’s Laptop",
+                        const Text("Adi’s Laptop",
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600)),
-                        Text("1h 30m",
-                            style: TextStyle(
+                        Text(durationToString(int.parse(deviceUsage.totalTime.laptop)),
+                            style: const TextStyle(
                               fontSize: 18,
-                              color: Color(0xFF3D7FE0),
+                              color: MyColors.deviceTextColors,
                             )),
                       ],
                     )),

@@ -39,7 +39,7 @@ class _LinearBarState extends State<LinearBar>
     });
     _animationController = AnimationController(
         vsync: this,
-        duration:const Duration(milliseconds: 0));
+        duration:const Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: widget.percent).animate(
       CurvedAnimation(parent: _animationController!, curve: Curves.linear),
     )..addListener(() {
